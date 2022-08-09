@@ -1,0 +1,23 @@
+.topPanel {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    background-image: url(	https://birds-quiz.netlify.app/static/media/logo.4f82cd73.svg);
+    width: 200px;
+    height: 55px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.score {
+    font-size: 1.171875rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #ffffff;
+}

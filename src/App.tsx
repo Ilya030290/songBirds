@@ -1,12 +1,14 @@
 import React from 'react';
-import './App.css';
+import Header from "./components/Header/Header";
+import style from './App.module.css';
+
 
 const App = () => {
-  return (
-    <div>
-
-    </div>
-  );
+    return (
+        <div className={style.appContainer}>
+            <Header />
+        </div>
+    );
 }
 
 export default App;
