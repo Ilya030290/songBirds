@@ -4,7 +4,7 @@
     justify-content: space-between;
     align-items: center;
     list-style: none;
-    border-radius: 6px;
+    border-radius: 0.25rem;
     background-color: #007c5d;
     padding-inline-start: 0;
 }
@@ -19,4 +19,8 @@
 .item a {
     text-decoration: none;
     color: #ffffff;
+}
+
+.activeItem {
+    background-color: #00BC8C;
 }
