@@ -1,6 +1,6 @@
 import React from 'react';
-import style from './QuestionBlock.module.css';
 import AudioPlayer from "./AudioPlayer/AudioPlayer";
+import style from './QuestionBlock.module.css';
 
 
 const QuestionBlock = () => {
