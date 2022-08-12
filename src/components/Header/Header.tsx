@@ -1,7 +1,8 @@
 import React from 'react';
 import TopPanel from "./TopPanel/TopPanel";
-import style from './Header.module.css';
 import BirdsList from "./BirdsList/BirdsList";
+import style from './Header.module.css';
+
 
 const Header = () => {
     return (
