@@ -1,16 +1,17 @@
 import React from 'react';
+import {useAppSelector} from "../../../redux/store";
 import style from './Answers.module.css';
 
 
 const Answers = () => {
 
-    const birds = ['Ворон', 'Журавль', 'Ласточка', 'Козодой', 'Кукушка', 'Синица'];
+    const birdsOfFirstGroup = useAppSelector(state => state.birds[0]);
 
     return (
         <div className={style.answers}>
             <ul className={style.answersList}>
                 {
-                    birds.map((el, index) => <li key={index}><span/>{el}</li>)
+                    birdsOfFirstGroup.map(bird => <li key={bird.id}><span/>{bird.name}</li>)
                 }
             </ul>
         </div>
