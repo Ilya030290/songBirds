@@ -10,7 +10,7 @@ const Answers = () => {
         <div className={style.answers}>
             <ul className={style.answersList}>
                 {
-                    birds.map(el => <li><span/>{el}</li>)
+                    birds.map((el, index) => <li key={index}><span/>{el}</li>)
                 }
             </ul>
         </div>
