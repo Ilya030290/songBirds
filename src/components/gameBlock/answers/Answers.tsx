@@ -5,13 +5,13 @@ import style from './Answers.module.css';
 
 const Answers = () => {
 
-    const birdsOfFirstGroup = useAppSelector(state => state.birds[0]);
+    const birdsOfFirstSection = useAppSelector(state => state.birds[0].birds);
 
     return (
         <div className={style.answers}>
             <ul className={style.answersList}>
                 {
-                    birdsOfFirstGroup.map(bird => <li key={bird.id}><span/>{bird.name}</li>)
+                    birdsOfFirstSection.map(bird => <li key={bird.id}><span/>{bird.name}</li>)
                 }
             </ul>
         </div>
