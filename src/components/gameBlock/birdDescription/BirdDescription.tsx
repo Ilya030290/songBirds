@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import BirdCard from "./BirdCard/BirdCard";
+import BirdCard from "./birdCard/BirdCard";
 import style from './BirdDescription.module.css';
 
 

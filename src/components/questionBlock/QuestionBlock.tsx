@@ -1,5 +1,5 @@
 import React from 'react';
-import AudioPlayer from "./AudioPlayer/AudioPlayer";
+import AudioPlayer from "./audioPlayer/AudioPlayer";
 import style from './QuestionBlock.module.css';
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import TopPanel from "./TopPanel/TopPanel";
-import BirdsList from "./BirdsList/BirdsList";
+import TopPanel from "./topPanel/TopPanel";
+import BirdsList from "./birdsList/BirdsList";
 import style from './Header.module.css';
 
 

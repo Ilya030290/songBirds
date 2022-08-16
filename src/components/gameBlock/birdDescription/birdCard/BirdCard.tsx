@@ -1,5 +1,5 @@
 import React from 'react';
-import AudioPlayer from "../../../QuestionBlock/AudioPlayer/AudioPlayer";
+import AudioPlayer from "../../../questionBlock/audioPlayer/AudioPlayer";
 import {useAppSelector} from "../../../../redux/store";
 import style from './BirdCard.module.css';
 

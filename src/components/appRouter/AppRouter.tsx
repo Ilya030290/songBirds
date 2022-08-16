@@ -1,16 +1,16 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
-import Layout from "../Layout/Layout";
-import MainPage from "../../pages/MainPage/MainPage";
-import Congratulations from "../CongratsComponent/Congratulations";
-import NotFound from "../../pages/NotFoundPage/NotFound";
+import Layout from "../layout/Layout";
+import GamePage from "../../pages/gamePage/GamePage";
+import Congratulations from "../congratsComponent/Congratulations";
+import NotFound from "../../pages/notFoundPage/NotFound";
 
 
 const AppRouter = () => {
     return (
         <Routes>
             <Route path={'/'} element={<Layout/>}>
-                <Route index element={<MainPage/>}/>
+                <Route index element={<GamePage/>}/>
                 <Route path={'congratulations'} element={<Congratulations/>}/>
             </Route>
             <Route path={'*'} element={<NotFound/>}/>

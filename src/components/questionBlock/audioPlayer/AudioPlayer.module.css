@@ -41,18 +41,6 @@
     background: linear-gradient(to right, rgb(0, 188, 140) 0%, rgb(61, 133, 140) 0%, rgb(115, 115, 115) 0%, rgb(115, 115, 115) 100%);
 }
 
-.timeBarCircle {
-    position: absolute;
-    top: 10px;
-    width: 16px;
-    height: 16px;
-    background-color: grey;
-    border-radius: 50%;
-    transform: translate(-50%,calc(-50% + 2px));
-    box-shadow: 0 0 4px 0 rgb(0 0 0 / 20%);
-    cursor: pointer;
-}
-
 .timeInfo {
     display: flex;
     justify-content: space-between;
