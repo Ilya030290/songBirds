@@ -6,7 +6,7 @@ import style from './BirdCard.module.css';
 
 const BirdCard = () => {
 
-    const firstBirdInSection = useAppSelector(state => state.birds[0].birds[0]);
+    const firstBirdInSection = useAppSelector(state => state.game.birdsData[0].birds[0]);
 
     return (
         <div className={style.container}>
