@@ -6,11 +6,8 @@
 }
 
 .logo {
-    background-image: url(	https://birds-quiz.netlify.app/static/media/logo.4f82cd73.svg);
     width: 200px;
     height: 55px;
-    background-size: contain;
-    background-repeat: no-repeat;
 }
 
 .score {
