@@ -3,11 +3,15 @@ import TopPanel from "./topPanel/TopPanel";
 import BirdsList from "./birdsList/BirdsList";
 import style from './Header.module.css';
 
+type HeaderPropsType = {
+    score: number
+    currentLevel: number
+}
 
-const Header = () => {
+const Header: React.FC<HeaderPropsType> = ({score, currentLevel}) => {
     return (
         <div className={style.headerContainer}>
-            <TopPanel />
+            <TopPanel score={score} />
             <BirdsList />
         </div>
     );
