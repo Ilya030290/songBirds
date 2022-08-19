@@ -1,15 +1,16 @@
 import React from 'react';
-import {useAppSelector} from "../../../redux/store";
+import logo from '../../../assets/images/logo.4f82cd73.svg';
 import style from './TopPanel.module.css';
 
+type PropsType = {
+    score: number
+}
 
-const TopPanel = () => {
-
-    const score = useAppSelector(state => state.score.score);
+const TopPanel: React.FC<PropsType> = ({score}) => {
 
     return (
         <div className={style.topPanel}>
-            <div className={style.logo}></div>
+            <img className={style.logo} src={logo} alt="logo" />
             <h5 className={style.score}>
                 Score: <span>{score}</span>
             </h5>
