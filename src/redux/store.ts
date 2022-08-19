@@ -1,15 +1,14 @@
 import {AnyAction, combineReducers, configureStore, ThunkDispatch} from "@reduxjs/toolkit";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import thunk from 'redux-thunk';
-import {birdsReducer} from "./birdsReducer";
+import {gameReducer} from "./gameReducer";
 import {appReducer} from "./appReducer";
-import {scoreReducer} from "./scoreReducer";
+
 
 
 const rootReducer = combineReducers({
     app: appReducer,
-    score: scoreReducer,
-    birds: birdsReducer
+    game: gameReducer
 });
 
 export const store = configureStore({
