@@ -27,7 +27,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(setQuestionBirdID(
-            {value: Math.floor(Math.random() * birdsData[currentLevel].birds.length + 1)}
+            {value: Math.floor(Math.random() * birdsData[currentLevel].birds.length)}
         ));
     }, [dispatch, currentLevel, questionBirdID, birdsData])
 
@@ -50,11 +50,11 @@ const App = () => {
 
     return (
         <div className={style.appContainer}>
-            <Header score={score} currentLevel={currentLevel}/>
+            <Header score={score} currentLevel={currentLevel} birdsData={birdsData}/>
             {
                 isFinished
-                ? <Congratulations/>
-                : <GamePage/>
+                ? <Congratulations score={score} handleFinish={handleFinish}/>
+                : <GamePage resetCurrentLevel={resetCurrentLevel}/>
             }
         </div>
     );
