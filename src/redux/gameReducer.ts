@@ -3,7 +3,7 @@ import {BirdsApi} from "../api/birdsApi";
 import {setAppLoadingStatus} from "./appReducer";
 import {BirdsSectionType, initialStateType} from "../types/types";
 import image from '../assets/images/bird.06a46938.jpg';
-import {indicators} from "../common/constants";
+import {indicators} from "../constants/constants";
 
 
 export const initialState: initialStateType = {
@@ -13,19 +13,19 @@ export const initialState: initialStateType = {
     },
     birdsData: [
         {
-            id: 3,
-            title: "Лесные птицы",
+            id: 0,
+            title: "",
             birds: [
                 {
-                    id: 1,
-                    name: "Зяблик",
-                    species: "Fringilla coelebs",
-                    description: "В дикой природе насчитывается 450 видов зябликов. Зимой зяблики ведут стайный образ жизни. Иногда в их семьях можно увидеть воробьев. Запевают зяблики весной, с наступлением брачного периода. Их пение – это заливистые многоминутные рулады.",
-                    image: "https://live.staticflickr.com/65535/49143150817_2d3a2f6c1e.jpg",
-                    audio: "https://www.xeno-canto.org/sounds/uploaded/ZNCDXTUOFL/XC512407-150622_03%20zi%C4%99ba%20%282%29.mp3"
+                    id: 0,
+                    name: "",
+                    species: "",
+                    description: "",
+                    image: "",
+                    audio: ""
                 }
             ]
-        }
+        },
     ] as BirdsSectionType[],
     indicators,
     currentLevel: 0,
@@ -61,7 +61,7 @@ const slice = createSlice({
         setIsMatch: (state, action: PayloadAction<{isMatch: boolean}>) => {
             state.isMatch =  action.payload.isMatch;
         },
-        setQuestionBirdID: (state, action: PayloadAction<{value: number}>) => {
+        setQuestionBirdID: (state, action: PayloadAction<{value: number | null}>) => {
             state.questionBirdID = action.payload.value;
         },
         setDescriptionBirdID: (state, action: PayloadAction<{value: number | null}>) => {
