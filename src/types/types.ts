@@ -15,7 +15,7 @@ export type BirdType = {
     audio: string
 };
 
-export type Indicator = {
+export type IndicatorType = {
     id: number
     status: string
 };
@@ -28,7 +28,7 @@ export type defaultData = {
 export type initialStateType = {
     defaultBirdData: defaultData
     birdsData: BirdsSectionType[]
-    indicators: Indicator[]
+    indicators: IndicatorType[]
     currentLevel: number
     score: number
     currentLevelScore: number
@@ -36,8 +36,8 @@ export type initialStateType = {
     isMatch: boolean
     isFinished: boolean
     clickedOptionsIDs: number[]
-    questionBirdID: number | null
-    descriptionBirdID: number | null
+    questionBirdID?: number | null
+    descriptionBirdID?: number | null
     fail?: HTMLAudioElement
     success?: HTMLAudioElement
 };
