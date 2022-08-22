@@ -16,13 +16,11 @@
     height: 35px;
     line-height: 2.2;
     text-align: center;
-}
-
-.item a {
-    text-decoration: none;
     color: #ffffff;
 }
 
+
 .activeItem {
     background-color: #00BC8C;
+    border-radius: 0.25rem;
 }

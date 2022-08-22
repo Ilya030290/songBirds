@@ -1,29 +1,35 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import style from './BirdsList.module.css';
+import {BirdsSectionType} from "../../../types/types";
 
+type BirdsListProps = {
+    currentLevel: number
+    birdsData: BirdsSectionType[]
+}
 
-const BirdsList = () => {
-    return (
+const BirdsList: React.FC<BirdsListProps> = ({currentLevel, birdsData}) => {
+
+    const birdsSectionList = useMemo(() => (
         <ul className={style.list}>
-            <li className={style.item}>
-                <a href={''}>Разминка</a>
-            </li>
-            <li className={style.item}>
-                <a href={''}>Воробьиные</a>
-            </li>
-            <li className={style.item}>
-                <a href={''}>Лесные птицы</a>
-            </li>
-            <li className={style.item}>
-                <a href={''}>Певчие птицы</a>
-            </li>
-            <li className={style.item}>
-                <a href={''}>Хищные птицы</a>
-            </li>
-            <li className={style.item}>
-                <a href={''}>Морские птицы</a>
-            </li>
+            {
+                birdsData.map((section) => {
+
+                    const isActive = currentLevel === (section.id - 1);
+
+                    return (
+                        <li key={section.id} className={`${style.item} ${isActive && style.activeItem}`}>
+                            {section.title}
+                        </li>
+                    );
+                })
+            }
         </ul>
+    ), [currentLevel, birdsData]);
+
+    return (
+        <>
+            {birdsSectionList}
+        </>
     );
 };
 
