@@ -1,31 +1,52 @@
 import React from 'react';
 import AudioPlayer from "../../questionBlock/audioPlayer/AudioPlayer";
-import {useAppSelector} from "../../../redux/store";
+import {BirdsSectionType} from "../../../types/types";
 import style from './BirdCard.module.css';
 
 
-const BirdCard = () => {
+type BirdCardProps = {
+    image: string
+    name: string
+    species: string
+    description: string
+    descriptionBirdID: number | null
+    currentLevel: number
+    birdsData: BirdsSectionType[]
+}
 
-    const firstBirdInSection = useAppSelector(state => state.game.birdsData[0].birds[0]);
+const BirdCard: React.FC<BirdCardProps> = (
+    {   image,
+        name,
+        species,
+        description,
+        descriptionBirdID,
+        currentLevel,
+        birdsData
+    }
+    ) => {
 
     return (
         <div className={style.container}>
             <div className={style.cardBody}>
-                <img src={firstBirdInSection.image} alt={'bird'}/>
+                <img src={image} alt={'bird'}/>
                 <ul>
                     <li>
-                        <h4>{firstBirdInSection.name}</h4>
+                        <h4>{name}</h4>
                     </li>
                     <li>
-                        <span>{firstBirdInSection.species}</span>
+                        <span>{species}</span>
                     </li>
                     <li>
-                        <AudioPlayer/>
+                        {
+                            descriptionBirdID &&
+                            <AudioPlayer audio={birdsData[currentLevel].birds[descriptionBirdID - 1].audio}
+                            />
+                        }
                     </li>
                 </ul>
             </div>
             <span>
-                {firstBirdInSection.description}
+                {description}
             </span>
 
         </div>
