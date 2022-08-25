@@ -1,5 +1,3 @@
-export type BirdsSectionsTitleType = "Разминка" | "Воробьиные" | "Лесные птицы" | "Певчие птицы" | "Хищные птицы";
-
 export type BirdsSectionType = {
     id: number
     title: string
@@ -36,8 +34,8 @@ export type initialStateType = {
     isMatch: boolean
     isFinished: boolean
     clickedOptionsIDs: number[]
-    questionBirdID?: number | null
-    descriptionBirdID?: number | null
-    fail?: HTMLAudioElement
-    success?: HTMLAudioElement
+    questionBirdID: number | null
+    descriptionBirdID: number | null
+    failAudio: HTMLAudioElement
+    successAudio: HTMLAudioElement
 };
