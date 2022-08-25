@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {BirdsApi} from "../api/birdsApi";
 import {setAppLoadingStatus} from "./appReducer";
-import {BirdsSectionType, initialStateType} from "../types/types";
+import {BirdsSectionType, IndicatorType, initialStateType} from "../types/types";
 import image from '../assets/images/bird.06a46938.jpg';
 import {indicators} from "../constants/constants";
 
@@ -9,7 +9,7 @@ import {indicators} from "../constants/constants";
 export const initialState: initialStateType = {
     defaultBirdData: {
         image,
-        name: ''
+        name: '******'
     },
     birdsData: [
         {
@@ -36,7 +36,9 @@ export const initialState: initialStateType = {
     isFinished: false,
     clickedOptionsIDs: [],
     questionBirdID: null,
-    descriptionBirdID: null
+    descriptionBirdID: null,
+    successAudio: new Audio('https://birds-quiz.netlify.app/static/media/win.a1e9e8b6.mp3'),
+    failAudio: new Audio('https://birds-quiz.netlify.app/static/media/error.165166d5.mp3')
 }
 
 const slice = createSlice({
@@ -66,6 +68,29 @@ const slice = createSlice({
         },
         setDescriptionBirdID: (state, action: PayloadAction<{value: number | null}>) => {
             state.descriptionBirdID = action.payload.value;
+        },
+        setClickedOptionsIDs: (state, action: PayloadAction<{clickedOptions: number}>) => {
+            const newArr = [...state.clickedOptionsIDs];
+            if(!state.clickedOptionsIDs.includes(action.payload.clickedOptions)) {
+                newArr.push(action.payload.clickedOptions);
+            }
+            state.clickedOptionsIDs = newArr;
+        },
+        resetClickedOptionsIDs: (state) => {
+            state.clickedOptionsIDs = [];
+        },
+        setIndicatorStatus: (state, action: PayloadAction<{indicator: IndicatorType}>) => {
+            state.indicators = state.indicators.map((indicator: IndicatorType) => {
+                if(indicator.id === action.payload.indicator.id) {
+                    return {...indicator, status: action.payload.indicator.status}
+                }
+                return indicator;
+            })
+        },
+        resetIndicatorStatus: (state) => {
+            state.indicators = state.indicators.map((indicator: IndicatorType) => {
+                return {...indicator, status: 'default'}
+            })
         }
     },
     extraReducers: builder => {
@@ -87,6 +112,10 @@ export const {
     setQuestionBirdID,
     setIsFinished,
     setIsMatch,
+    setClickedOptionsIDs,
+    resetClickedOptionsIDs,
+    setIndicatorStatus,
+    resetIndicatorStatus
 } = slice.actions;
 
 //ThunkCreator
