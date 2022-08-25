@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "./redux/store";
 import {
-    fetchBirdsData, setCurrentLevelScore,
+    fetchBirdsData, resetClickedOptionsIDs, resetIndicatorStatus, setCurrentLevelScore,
     setDescriptionBirdID,
     setIsButtonDisabled, setIsFinished,
     setIsMatch, setNextLevel,
@@ -18,7 +18,7 @@ const App = () => {
 
     const dispatch = useAppDispatch();
     const status = useAppSelector(state => state.app.status);
-    const {currentLevel, isFinished, score, questionBirdID, birdsData} = useAppSelector(state => state.game);
+    const {currentLevel, isFinished, score, birdsData} = useAppSelector(state => state.game);
 
 
     useEffect(() => {
@@ -27,23 +27,25 @@ const App = () => {
 
     useEffect(() => {
         dispatch(setQuestionBirdID(
-            {value: Math.floor(Math.random() * birdsData[currentLevel].birds.length)}
+            {value: Math.floor(Math.random() * birdsData[currentLevel].birds.length + 1)}
         ));
-    }, [dispatch, currentLevel, questionBirdID, birdsData])
+    }, [dispatch, currentLevel, birdsData]);
+
 
     const resetCurrentLevel = () => {
-        setDescriptionBirdID({value: null});
-        setIsButtonDisabled({isDisabled: true});
-        setIsMatch({isMatch: false});
-        setCurrentLevelScore({currentLevelScore: 5});
-
+        dispatch(setDescriptionBirdID({value: null}));
+        dispatch(setIsButtonDisabled({isDisabled: true}));
+        dispatch(setIsMatch({isMatch: false}));
+        dispatch(setCurrentLevelScore({currentLevelScore: 5}));
+        dispatch(resetClickedOptionsIDs());
+        dispatch(resetIndicatorStatus());
     };
 
     const handleFinish = () => {
         resetCurrentLevel();
-        setNextLevel({value: 0});
-        setScore({score: 0});
-        setIsFinished({isFinished: false});
+        dispatch(setNextLevel({value: 0}));
+        dispatch(setScore({score: 0}));
+        dispatch(setIsFinished({isFinished: false}));
     }
 
     if(status === 'loading') return <Loader/>
