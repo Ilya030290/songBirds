@@ -1,14 +1,16 @@
-import React from 'react';
-import {useAppSelector} from "../../redux/store";
+import React, {useMemo} from 'react';
+import {useAppDispatch, useAppSelector} from "../../redux/store";
 import {
+    setClickedOptionsIDs,
     setCurrentLevelScore,
-    setDescriptionBirdID,
+    setDescriptionBirdID, setIndicatorStatus,
     setIsButtonDisabled, setIsFinished,
     setIsMatch,
     setScore
 } from "../../redux/gameReducer";
 import {BirdType} from "../../types/types";
 import Answer from "./answer/Answer";
+import {statuses} from "../../constants/constants";
 import style from './Answers.module.css';
 
 
@@ -17,6 +19,8 @@ type AnswersProps = {
 }
 
 const Answers: React.FC<AnswersProps> = ({birds}) => {
+
+    const dispatch = useAppDispatch();
     const {
         indicators,
         questionBirdID,
@@ -25,62 +29,71 @@ const Answers: React.FC<AnswersProps> = ({birds}) => {
         currentLevel,
         clickedOptionsIDs,
         isMatch,
+        failAudio,
+        successAudio
     } = useAppSelector((state) => state.game);
 
     const setRightAnswer = () => {
-        setIsButtonDisabled({isDisabled: false});
-        setIsMatch({isMatch: true});
-        setScore({score: score + currentLevelScore});
-
+        dispatch(setIsButtonDisabled({isDisabled: false}));
+        dispatch(setIsMatch({isMatch: true}));
+        dispatch(setScore({score: score + currentLevelScore}));
+        successAudio.currentTime = 0;
+        successAudio.play();
     }
 
     const setWrongAnswer = () => {
-        setCurrentLevelScore({currentLevelScore: currentLevelScore - 1});
-
+        dispatch(setCurrentLevelScore({currentLevelScore: currentLevelScore - 1}));
+        failAudio.currentTime = 0;
+        failAudio.play();
     }
 
-    const handleClick = (button: HTMLButtonElement, id: number) => {
+    const handleClick = (li: HTMLLIElement, id: number) => {
+
         const isRightAnswer = questionBirdID === id;
         const isGameFinished = isRightAnswer && currentLevel === 5;
         const isOptionHasBeenClicked = clickedOptionsIDs.find((clickedOptionId: number) => clickedOptionId === id);
 
-        setDescriptionBirdID({value: id});
+        dispatch(setDescriptionBirdID({value: id}));
+        dispatch(setClickedOptionsIDs({clickedOptions: id}));
 
-
-        if(isGameFinished) {
-            setIsFinished({isFinished: true});
+        if (isGameFinished) {
+            dispatch(setIsFinished({isFinished: true}));
         }
-        if(isMatch) {
+        if (isMatch) {
             return;
         }
-        if(!isOptionHasBeenClicked) {
+        if (!isOptionHasBeenClicked) {
             isRightAnswer ? setRightAnswer() : setWrongAnswer();
-
+            dispatch(setIndicatorStatus({
+                indicator: {id, status: isRightAnswer ? statuses.success : statuses.fail}
+            }));
         }
     }
 
+    const answersList = useMemo(() => (
+
+        <ul className={style.answersList}>
+            {
+                birds.map((bird) => {
+                    const indicator = indicators.find((el) => el.id === bird.id);
+
+                    return (
+                        indicator &&
+                        <Answer
+                            key={bird.id}
+                            id={bird.id}
+                            name={bird.name}
+                            indicator={indicator}
+                            handleClick={handleClick}
+                        />
+                    )
+                })
+            }
+        </ul>
+    ), [indicators, birds, questionBirdID])
     return (
         <div className={style.answers}>
-            <ul className={style.answersList}>
-                {
-                    birds.map(bird => {
-                        const indicator = indicators.find((el) => el.id === bird.id);
-
-                        return (
-                            <Answer
-                                key={bird.id}
-                                id={bird.id}
-                                // @ts-ignore
-                                questionBirdId={questionBirdID}
-                                name={bird.name}
-                                // @ts-ignore
-                                indicator={indicator}
-                                handleClick={handleClick}
-                            />
-                        )
-                    })
-                }
-            </ul>
+            {answersList}
         </div>
     );
 };
