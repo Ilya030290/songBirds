@@ -1,6 +1,6 @@
 import React from 'react';
 import {useAppSelector} from "../../redux/store";
-import AudioPlayer from "./audioPlayer/AudioPlayer";
+import AudioPlayer from "../common/audioPlayer/AudioPlayer";
 import style from './QuestionBlock.module.css';
 
 type QuestionPropsType = {

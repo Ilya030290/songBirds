@@ -1,5 +1,5 @@
 import React from 'react';
-import AudioPlayer from "../../questionBlock/audioPlayer/AudioPlayer";
+import AudioPlayer from "../../common/audioPlayer/AudioPlayer";
 import {BirdsSectionType} from "../../../types/types";
 import style from './BirdCard.module.css';
 
