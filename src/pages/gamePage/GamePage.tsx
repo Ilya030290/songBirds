@@ -1,10 +1,9 @@
 import React from 'react';
+import {useAppDispatch, useAppSelector} from "../../redux/store";
 import {setNextLevel} from "../../redux/gameReducer";
 import QuestionBlock from "../../components/questionBlock/QuestionBlock";
 import Answers from "../../components/answers/Answers";
 import BirdDescription from "../../components/birdDescription/BirdDescription";
-import NextLevelButton from "../../components/nextLevelButton/NextLevelButton";
-import {useAppSelector} from "../../redux/store";
 import style from "../../pages/gamePage/GamePage.module.css";
 
 
@@ -14,6 +13,7 @@ type PropsType = {
 
 const GamePage: React.FC<PropsType> = ({resetCurrentLevel}) => {
 
+    const dispatch = useAppDispatch();
     const {
         birdsData,
         currentLevel,
@@ -34,19 +34,26 @@ const GamePage: React.FC<PropsType> = ({resetCurrentLevel}) => {
 
     const handleClick = () => {
         if(currentLevel < birdsData.length - 1) {
-            setNextLevel({value: currentLevel + 1});
+            dispatch(setNextLevel({value: currentLevel + 1}));
             resetCurrentLevel();
         }
-    }
+    };
+
     return (
         <>
-            <QuestionBlock />
+            <QuestionBlock image={bird.image} name={bird.name}/>
             <div className={style.container}>
                 <Answers birds={birdsData[currentLevel].birds} />
-                <BirdDescription />
+                <BirdDescription bird={descriptionBirdID && birdsData[currentLevel].birds[descriptionBirdID - 1]}/>
             </div>
             {
-                isNotLastLevel && <NextLevelButton handleClick={handleClick} disabled={isButtonDisabled} />
+                isNotLastLevel &&
+                <button className={`${isButtonDisabled ? style.disabledBtn : style.unDisabledBtn} ${style.btn}`}
+                        onClick={handleClick}
+                        disabled={isButtonDisabled}
+                >
+                    Next Level
+                </button>
             }
         </>
     );
