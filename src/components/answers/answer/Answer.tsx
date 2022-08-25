@@ -5,22 +5,26 @@ import style from  './Answer.module.css';
 
 type AnswerProps = {
     id: number
-    questionBirdId: number
     name: string
     indicator: IndicatorType
-    handleClick: (button: HTMLButtonElement, id: number) => void
+    handleClick: (li: HTMLLIElement, id: number) => void
 }
 
-const Answer: React.FC<AnswerProps> = ({id, questionBirdId, name, indicator, handleClick}) => {
+const Answer: React.FC<AnswerProps> = ({id, name, indicator, handleClick}) => {
 
-    const isRightAnswer = id === questionBirdId;
-
+      const getIndicatorStyleStatus = (status: string) => {
+          if(status === 'default') {
+              return style.default;
+          } else if(status === 'fail') {
+              return style.fail;
+          } else if(status === 'success') {
+              return style.success;
+          }
+      }
     return (
-        <li className={style.answer}>
-            <button className={style.btn} onClick={(event) => handleClick(event.currentTarget, id)}>
-                <div className={`${indicator && indicator.status} ${style.indicator}`} />
+        <li className={style.answer} onClick={(event) => handleClick(event.currentTarget, id)}>
+                <span className={`${style.indicator} ${getIndicatorStyleStatus(indicator.status)}`} />
                 {name}
-            </button>
         </li>
     );
 };
