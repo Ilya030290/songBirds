@@ -1,19 +1,32 @@
-import React, {useState} from 'react';
+import React from 'react';
 import BirdCard from "./birdCard/BirdCard";
+import {useAppSelector} from "../../redux/store";
+import {BirdType} from "../../types/types";
 import style from './BirdDescription.module.css';
 
 
-const BirdDescription = () => {
+type PropsType = {
+    bird: BirdType | null | 0
+}
 
-    const [editMode, setEditMode] = useState<boolean>(false);
-    const onChangeEditMode = () => setEditMode(!editMode);
+const BirdDescription: React.FC<PropsType> = ({bird}) => {
+
+    const {currentLevel, descriptionBirdID, birdsData} = useAppSelector(state => state.game);
 
     return (
-        <div className={style.container} onClick={onChangeEditMode}>
+        <div className={style.container}>
             <div className={style.description} >
                 {
-                    editMode
-                        ? <BirdCard/>
+                    bird
+                        ? <BirdCard
+                            image={bird.image}
+                            name={bird.name}
+                            species={bird.species}
+                            description={bird.description}
+                            descriptionBirdID={descriptionBirdID}
+                            currentLevel={currentLevel}
+                            birdsData={birdsData}
+                        />
                         : <p>
                             <span>Послушайте плеер.</span>
                             <span>Выберите птицу из списка</span>
