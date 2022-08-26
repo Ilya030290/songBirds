@@ -1,3 +1,94 @@
 .audioPlayer {
-    padding: 0.25rem;
+    width: 100%;
+    display: flex;
+}
+
+.toggle {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.toggleButton {
+    color: #008966;
+    transition: all 0.2s ease;
+    width: 40px;
+    height: 40px;
+}
+.toggleButton:hover {
+    color: #00bc8c;
+}
+
+.progress {
+    margin-left: 5px;
+    width: 100%;
+}
+
+.progressBar {
+    margin-top: 25px;
+    --seek-before-width: 0;
+    display: block;
+    width: 100%;
+}
+
+.status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0 0;
+}
+
+.status span {
+    font-size: 11px;
+    color: #d3d3d3;
+}
+
+.volumeBar {
+    margin-left: 30%;
+    --volume: 0;
+    width: 25%;
+}
+
+.progressBar,
+.volumeBar {
+    display: block;
+    appearance: none;
+    outline: none;
+    background: rgb(115, 115, 115);
+    border-radius: 10px;
+    position: relative;
+    height: 4px;
+    cursor: pointer;
+}
+
+.progressBar::before,
+.volumeBar::before {
+    content: '';
+    height: 4px;
+    background: linear-gradient(90deg, #01bb8cff 0%, #3b878cff 100%);
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.progressBar::before {
+    width: var(--seek-before-width);
+}
+.volumeBar::before {
+    width: var(--volume);
+}
+
+.progressBar::-webkit-slider-thumb,
+.volumeBar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    border: none;
+    background-color: #808080;
+    cursor: pointer;
+    position: relative;
+    z-index: 3;
 }
