@@ -10,7 +10,7 @@ type QuestionPropsType = {
 
 const QuestionBlock: React.FC<QuestionPropsType> = ({image, name}) => {
 
-    const {currentLevel, birdsData, questionBirdID} = useAppSelector(state => state.game);
+    const {currentLevel, birdsData, questionBirdID, isMatch} = useAppSelector(state => state.game);
 
     return (
         <div className={style.questionContainer}>
@@ -21,6 +21,7 @@ const QuestionBlock: React.FC<QuestionPropsType> = ({image, name}) => {
                     {
                         questionBirdID &&
                         <AudioPlayer audio={birdsData[currentLevel].birds[questionBirdID - 1].audio}
+                                     isMatch={isMatch}
                         />
                     }
                 </div>

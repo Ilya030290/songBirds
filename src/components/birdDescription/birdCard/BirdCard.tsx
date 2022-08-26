@@ -12,6 +12,7 @@ type BirdCardProps = {
     descriptionBirdID: number | null
     currentLevel: number
     birdsData: BirdsSectionType[]
+    isMatch: boolean
 }
 
 const BirdCard: React.FC<BirdCardProps> = (
@@ -21,7 +22,8 @@ const BirdCard: React.FC<BirdCardProps> = (
         description,
         descriptionBirdID,
         currentLevel,
-        birdsData
+        birdsData,
+        isMatch
     }
     ) => {
 
@@ -34,12 +36,13 @@ const BirdCard: React.FC<BirdCardProps> = (
                         <h4>{name}</h4>
                     </li>
                     <li>
-                        <span>{species}</span>
+                        <span className={style.span}>{species}</span>
                     </li>
                     <li>
                         {
                             descriptionBirdID &&
                             <AudioPlayer audio={birdsData[currentLevel].birds[descriptionBirdID - 1].audio}
+                                         isMatch={isMatch}
                             />
                         }
                     </li>
@@ -48,7 +51,6 @@ const BirdCard: React.FC<BirdCardProps> = (
             <span>
                 {description}
             </span>
-
         </div>
     );
 };

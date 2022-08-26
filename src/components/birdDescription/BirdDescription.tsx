@@ -11,7 +11,7 @@ type PropsType = {
 
 const BirdDescription: React.FC<PropsType> = ({bird}) => {
 
-    const {currentLevel, descriptionBirdID, birdsData} = useAppSelector(state => state.game);
+    const {currentLevel, descriptionBirdID, birdsData, isMatch} = useAppSelector(state => state.game);
 
     return (
         <div className={style.container}>
@@ -26,6 +26,7 @@ const BirdDescription: React.FC<PropsType> = ({bird}) => {
                             descriptionBirdID={descriptionBirdID}
                             currentLevel={currentLevel}
                             birdsData={birdsData}
+                            isMatch={isMatch}
                         />
                         : <p>
                             <span>Послушайте плеер.</span>
