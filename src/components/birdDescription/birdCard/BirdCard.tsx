@@ -48,7 +48,7 @@ const BirdCard: React.FC<BirdCardProps> = (
                     </li>
                 </ul>
             </div>
-            <span>
+            <span className={style.description}>
                 {description}
             </span>
         </div>
