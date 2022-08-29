@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
-import style from './BirdsList.module.css';
 import {BirdsSectionType} from "../../../types/types";
+import style from './BirdsList.module.css';
 
 type BirdsListProps = {
     currentLevel: number
