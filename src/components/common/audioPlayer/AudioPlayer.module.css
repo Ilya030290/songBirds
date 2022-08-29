@@ -92,3 +92,51 @@
     position: relative;
     z-index: 3;
 }
+
+@media screen and (max-width: 760px) {
+    .toggleButton {
+        width: 30px;
+        height: 30px;
+    }
+    .progressBar, .volumeBar {
+        height: 3px;
+    }
+    .progressBar::before,
+    .volumeBar::before{
+        height: 3px;
+    }
+    .progressBar::-webkit-slider-thumb,
+    .volumeBar::-webkit-slider-thumb {
+        height: 10px;
+        width: 10px;
+    }
+    .status span {
+        font-size: 9px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .toggleButton {
+        width: 20px;
+        height: 20px;
+    }
+    .progressBar {
+        margin-top: 20px;
+        height: 2px;
+    }
+    .volumeBar {
+        height: 2px;
+    }
+    .progressBar::before,
+    .volumeBar::before{
+        height: 2px;
+    }
+    .progressBar::-webkit-slider-thumb,
+    .volumeBar::-webkit-slider-thumb {
+        height: 8px;
+        width: 8px;
+    }
+    .status span {
+        font-size: 7px;
+    }
+}
