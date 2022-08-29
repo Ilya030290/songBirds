@@ -1,5 +1,5 @@
 .answer {
-    padding: 0.855rem 1.25rem;
+    padding: 0.9rem 1.25rem;
     border: 1px solid #555;
     cursor: pointer;
     display: flex;
@@ -42,4 +42,34 @@
 
 .success {
     background-color: #00bc8c;
+}
+
+@media screen and (max-width: 1200px) {
+    .answer {
+        padding: 1.25rem 1.4rem;
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .answer {
+        padding: 0.4rem 1.4rem;
+        font-size: 13px;
+    }
+    .indicator {
+        margin-right: 2em;
+        width: 8px;
+        height: 8px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .answer {
+        padding: 0.3rem 1.4rem;
+        font-size: 12px;
+    }
+    .indicator {
+        width: 7px;
+        height: 7px;
+    }
 }
