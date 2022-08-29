@@ -2,6 +2,7 @@
     margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding: 4rem 2rem;
     background-color: #303030;
     border-radius: 0.3rem;
@@ -50,4 +51,74 @@
 
 .btn:hover {
     background-color: #00efb2;
+}
+
+img {
+    width: 480px;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 5%;
+}
+
+@media screen and (max-width: 1024px) {
+    .container h1 {
+        font-size: 3.0rem;
+        font-weight: 270;
+    }
+    .container p {
+        font-size: 1.0rem;
+        font-weight: 300;
+    }
+    .btn {
+        height: 40px;
+        font-weight: 350;
+        font-size: 0.8rem;
+        line-height: 0.8;
+    }
+    .container img {
+        width: 400px;
+        height: 280px;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .container h1 {
+        font-size: 2.4rem;
+        font-weight: 240;
+    }
+    .container p {
+        font-size: 0.8rem;
+        font-weight: 280;
+    }
+    .btn {
+        height: 30px;
+        font-weight: 320;
+        font-size: 0.7rem;
+        line-height: 0.1;
+    }
+    .container img {
+        width: 320px;
+        height: 260px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .container h1 {
+        font-size: 2.0rem;
+        font-weight: 220;
+    }
+    .container p {
+        font-size: 0.6rem;
+        font-weight: 250;
+    }
+    .btn {
+        height: 25px;
+        font-weight: 300;
+        font-size: 0.6rem;
+        line-height: 0.1;
+    }
+    .container img {
+        width: 240px;
+        height: 180px;
+    }
 }
