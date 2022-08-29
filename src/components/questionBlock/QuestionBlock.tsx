@@ -14,7 +14,7 @@ const QuestionBlock: React.FC<QuestionPropsType> = ({image, name}) => {
 
     return (
         <div className={style.questionContainer}>
-            <img src={image}  alt={'bird'}/>
+            <img className={style.img} src={image}  alt={'bird'}/>
             <div className={style.listContainer}>
                 <div className={style.list}>
                     <h3>{name}</h3>
