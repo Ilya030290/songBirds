@@ -2,7 +2,7 @@ import React from 'react';
 import TopPanel from "./topPanel/TopPanel";
 import BirdsList from "./birdsList/BirdsList";
 import {BirdsSectionType} from "../../types/types";
-import style from './Header.module.css';
+import styles from './Header.module.scss';
 
 
 type HeaderPropsType = {
@@ -13,7 +13,7 @@ type HeaderPropsType = {
 
 const Header: React.FC<HeaderPropsType> = ({score, currentLevel, birdsData}) => {
     return (
-        <div className={style.headerContainer}>
+        <div className={styles.headerContainer}>
             <TopPanel score={score} />
             <BirdsList currentLevel={currentLevel} birdsData={birdsData}/>
         </div>

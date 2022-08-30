@@ -4,7 +4,7 @@ import {setNextLevel} from "../../redux/gameReducer";
 import QuestionBlock from "../../components/questionBlock/QuestionBlock";
 import Answers from "../../components/answers/Answers";
 import BirdDescription from "../../components/birdDescription/BirdDescription";
-import style from "../../pages/gamePage/GamePage.module.css";
+import styles from "./GamePage.module.scss";
 
 
 type PropsType = {
@@ -42,13 +42,13 @@ const GamePage: React.FC<PropsType> = ({resetCurrentLevel}) => {
     return (
         <>
             <QuestionBlock image={bird.image} name={bird.name}/>
-            <div className={style.container}>
+            <div className={styles.container}>
                 <Answers birds={birdsData[currentLevel].birds} />
                 <BirdDescription bird={descriptionBirdID && birdsData[currentLevel].birds[descriptionBirdID - 1]}/>
             </div>
             {
                 isNotLastLevel &&
-                <button className={`${isButtonDisabled ? style.disabledBtn : style.unDisabledBtn} ${style.btn}`}
+                <button className={`${isButtonDisabled ? styles.disabledBtn : styles.unDisabledBtn} ${styles.btn}`}
                         onClick={handleClick}
                         disabled={isButtonDisabled}
                 >

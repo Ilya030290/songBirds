@@ -1,7 +1,7 @@
 import React from 'react';
 import AudioPlayer from "../../common/audioPlayer/AudioPlayer";
 import {BirdsSectionType} from "../../../types/types";
-import style from './BirdCard.module.css';
+import styles from './BirdCard.module.scss';
 
 
 type BirdCardProps = {
@@ -28,15 +28,15 @@ const BirdCard: React.FC<BirdCardProps> = (
     ) => {
 
     return (
-        <div className={style.container}>
-            <div className={style.cardBody}>
+        <div className={styles.container}>
+            <div className={styles.cardBody}>
                 <img src={image} alt={'bird'}/>
                 <ul>
                     <li>
                         <h4>{name}</h4>
                     </li>
                     <li>
-                        <span className={style.span}>{species}</span>
+                        <span className={styles.span}>{species}</span>
                     </li>
                     <li>
                         {
@@ -48,7 +48,7 @@ const BirdCard: React.FC<BirdCardProps> = (
                     </li>
                 </ul>
             </div>
-            <span className={style.description}>
+            <span className={styles.description}>
                 {description}
             </span>
         </div>

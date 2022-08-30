@@ -11,7 +11,7 @@ import {
 import {BirdType} from "../../types/types";
 import Answer from "./answer/Answer";
 import {statuses} from "../../constants/constants";
-import style from './Answers.module.css';
+import styles from './Answers.module.scss';
 
 
 type AnswersProps = {
@@ -72,7 +72,7 @@ const Answers: React.FC<AnswersProps> = ({birds}) => {
 
     const answersList = useMemo(() => (
 
-        <ul className={style.answersList}>
+        <ul className={styles.answersList}>
             {
                 birds.map((bird) => {
                     const indicator = indicators.find((el) => el.id === bird.id);
@@ -92,7 +92,7 @@ const Answers: React.FC<AnswersProps> = ({birds}) => {
         </ul>
     ), [indicators, birds, questionBirdID])
     return (
-        <div className={style.answers}>
+        <div className={styles.answers}>
             {answersList}
         </div>
     );

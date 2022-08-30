@@ -1,10 +1,10 @@
 import React from 'react';
-import style from './NotFound.module.css';
+import styles from './NotFound.module.scss';
 
 
 const NotFound = () => {
     return (
-        <div className={style.error}>
+        <div className={styles.error}>
                 <div>Error 404...</div>
                 <div>Page not found!</div>
                 <div>—ฅ/ᐠ.̫ .ᐟ\ฅ—</div>

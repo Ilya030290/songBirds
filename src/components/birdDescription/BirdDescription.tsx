@@ -2,7 +2,7 @@ import React from 'react';
 import BirdCard from "./birdCard/BirdCard";
 import {useAppSelector} from "../../redux/store";
 import {BirdType} from "../../types/types";
-import style from './BirdDescription.module.css';
+import styles from './BirdDescription.module.scss';
 
 
 type PropsType = {
@@ -14,8 +14,8 @@ const BirdDescription: React.FC<PropsType> = ({bird}) => {
     const {currentLevel, descriptionBirdID, birdsData, isMatch} = useAppSelector(state => state.game);
 
     return (
-        <div className={style.container}>
-            <div className={style.description} >
+        <div className={styles.container}>
+            <div className={styles.description} >
                 {
                     bird
                         ? <BirdCard

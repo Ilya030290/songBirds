@@ -11,7 +11,7 @@ import Header from "./components/header/Header";
 import GamePage from "./pages/gamePage/GamePage";
 import Loader from "./components/common/loader/Loader";
 import Congratulations from "./components/congratsComponent/Congratulations";
-import style from './App.module.css';
+import styles from './App.module.scss';
 
 
 const App = () => {
@@ -51,7 +51,7 @@ const App = () => {
     if(status === 'loading') return <Loader/>
 
     return (
-        <div className={style.appContainer}>
+        <div className={styles.appContainer}>
             <Header score={score} currentLevel={currentLevel} birdsData={birdsData}/>
             {
                 isFinished

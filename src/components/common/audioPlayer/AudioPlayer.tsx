@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { BsPlayCircle, BsPauseCircle } from 'react-icons/bs';
-import style from "./AudioPlayer.module.css";
+import styles from "./AudioPlayer.module.scss";
 
 
 type PropsType = {
@@ -127,7 +127,7 @@ const AudioPlayer: React.FC<PropsType> = ({audio, isMatch}) => {
     }, [isMatch]);
 
     return (
-        <div className={style.audioPlayer}>
+        <div className={styles.audioPlayer}>
             <audio
                 onLoadedMetadata={handleLoadingMetaData}
                 onEnded={stopPlaying}
@@ -137,27 +137,27 @@ const AudioPlayer: React.FC<PropsType> = ({audio, isMatch}) => {
                 <source src={audio} type="audio/mp3" />
                 <track kind="captions" />
             </audio>
-            <button className={style.toggle} onClick={togglePlayPause}>
+            <button className={styles.toggle} onClick={togglePlayPause}>
                 {
                     isPlaying
-                        ? <BsPauseCircle className={style.toggleButton} />
-                        : <BsPlayCircle className={style.toggleButton} />
+                        ? <BsPauseCircle className={styles.toggleButton} />
+                        : <BsPlayCircle className={styles.toggleButton} />
                 }
             </button>
-            <div className={style.progress}>
+            <div className={styles.progress}>
                 <input
-                    className={style.progressBar}
+                    className={styles.progressBar}
                     onChange={changeRange}
                     value={currentTime}
                     ref={progressBar}
                     type="range"
                 />
-                <div className={style.status}>
+                <div className={styles.status}>
                     <span>{calculateTime(currentTime)}</span>
                     <span>{calculateTime(duration)}</span>
                 </div>
                 <input
-                    className={style.volumeBar}
+                    className={styles.volumeBar}
                     onChange={changeVolume}
                     value={volume}
                     ref={volumeBar}

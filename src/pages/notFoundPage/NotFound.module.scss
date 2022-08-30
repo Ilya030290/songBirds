@@ -1,0 +1,12 @@
+@import 'src/colors';
+
+.error {
+  margin-top: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: $deepRed;
+  font-weight: bold;
+  font-size: xx-large;
+}

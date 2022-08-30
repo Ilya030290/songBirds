@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../../../assets/images/logo.4f82cd73.svg';
-import style from './TopPanel.module.css';
+import styles from './TopPanel.module.scss';
 
 type PropsType = {
     score: number
@@ -9,9 +9,9 @@ type PropsType = {
 const TopPanel: React.FC<PropsType> = ({score}) => {
 
     return (
-        <div className={style.topPanel}>
-            <img className={style.logo} src={logo} alt="logo" />
-            <h5 className={style.score}>
+        <div className={styles.topPanel}>
+            <img className={styles.logo} src={logo} alt="logo" />
+            <h5 className={styles.score}>
                 Score: <span>{score}</span>
             </h5>
         </div>
