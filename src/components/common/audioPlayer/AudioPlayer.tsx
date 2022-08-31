@@ -14,14 +14,13 @@ const AudioPlayer: React.FC<PropsType> = ({audio, isMatch}) => {
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [volume, setVolume] = useState(0.5);
-    const audioPlayer = useRef(null);
+    const audioPlayer = useRef<HTMLAudioElement>();
     const progressBar = useRef(null);
     const volumeBar = useRef(null);
     const animationRef = useRef(null);
 
     const handleLoadingMetaData = () => {
         if (audioPlayer?.current) {
-            //@ts-ignore
             const seconds = Math.floor(audioPlayer.current.duration);
             setDuration(seconds);
             //@ts-ignore
@@ -31,11 +30,7 @@ const AudioPlayer: React.FC<PropsType> = ({audio, isMatch}) => {
 
     const changePlayerCurrentTime = () => {
         //@ts-ignore
-        progressBar?.current.style.setProperty(
-            '--seek-before-width',
-            //@ts-ignore
-            `${(progressBar.current.value / duration) * 100}%`
-        );
+        progressBar?.current.style.setProperty('--seek-before-width',`${(progressBar.current.value / duration) * 100}%`);
         //@ts-ignore
         setCurrentTime(progressBar?.current.value);
     };
@@ -61,7 +56,7 @@ const AudioPlayer: React.FC<PropsType> = ({audio, isMatch}) => {
 
     const changeRange = () => {
         //@ts-ignore
-        audioPlayer.current.currentTime = progressBar?.current.value;
+        audioPlayer.current.currentTime = progressBar?.current?.value;
         changePlayerCurrentTime();
     };
 
@@ -114,6 +109,9 @@ const AudioPlayer: React.FC<PropsType> = ({audio, isMatch}) => {
         //@ts-ignore
         audioPlayer.current.src = audio;
         stopPlaying();
+        setCurrentTime(0);
+        //@ts-ignore
+        progressBar.current.style.setProperty('--seek-before-width',`${progressBar.current.value}`);
     }, [audio]);
 
     useEffect(() => {
@@ -131,6 +129,7 @@ const AudioPlayer: React.FC<PropsType> = ({audio, isMatch}) => {
             <audio
                 onLoadedMetadata={handleLoadingMetaData}
                 onEnded={stopPlaying}
+                //@ts-ignore
                 ref={audioPlayer}
                 preload="metadata"
             >
