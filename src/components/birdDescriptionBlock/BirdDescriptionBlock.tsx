@@ -1,17 +1,21 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectBirdsData, selectCurrentLevel, selectDescriptionBirdID, selectIsMatch } from '../../redux/gameReducer';
 import BirdCard from "./birdCard/BirdCard";
-import {useAppSelector} from "../../redux/store";
 import {BirdType} from "../../types/types";
-import styles from './BirdDescription.module.scss';
+import styles from './BirdDescriptionBlock.module.scss';
 
 
-type PropsType = {
+type BirdDescriptionBlockPropsType = {
     bird: BirdType | null | 0
 }
 
-const BirdDescription: React.FC<PropsType> = ({bird}) => {
+const BirdDescriptionBlock: React.FC<BirdDescriptionBlockPropsType> = ({bird}) => {
 
-    const {currentLevel, descriptionBirdID, birdsData, isMatch} = useAppSelector(state => state.game);
+    const birdsData = useSelector(selectBirdsData);
+    const currentLevel = useSelector(selectCurrentLevel);
+    const descriptionBirdID = useSelector(selectDescriptionBirdID);
+    const isMatch = useSelector(selectIsMatch);
 
     return (
         <div className={styles.container}>
@@ -38,4 +42,4 @@ const BirdDescription: React.FC<PropsType> = ({bird}) => {
     );
 };
 
-export default BirdDescription;
+export default BirdDescriptionBlock;
