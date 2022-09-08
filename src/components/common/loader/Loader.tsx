@@ -1,6 +1,6 @@
 import React from "react";
-import styles from './Loader.module.scss';
 import {CircularProgress} from '@mui/material';
+import styles from './Loader.module.scss';
 
 
 const Loader = () => {
