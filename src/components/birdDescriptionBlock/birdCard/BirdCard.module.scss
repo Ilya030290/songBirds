@@ -65,7 +65,7 @@
           }
         }
 
-        & .span {
+        & .speciesContainer {
           margin: 0;
           padding-bottom: 0.25rem;
           border-bottom: 1px solid $davyGray;
@@ -81,7 +81,7 @@
     }
   }
 
-  & .description {
+  & .descriptionContainer {
     @media screen and (max-width: $bp-xLarge) {
       font-size: 11px;
     }
