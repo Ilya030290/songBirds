@@ -1,9 +1,10 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, createSelector, PayloadAction} from "@reduxjs/toolkit";
 import {BirdsApi} from "../api/birdsApi";
 import {setAppLoadingStatus} from "./appReducer";
-import {BirdsSectionType, IndicatorType, initialStateType} from "../types/types";
+import {indicators, indicatorStatus, LOADING, SUCCESS, MAX_CURRENT_SCORE} from '../constants/constants';
+import { AppRootStateType } from './store';
+import { BirdsSectionType, defaultDataType, IndicatorType, initialStateType } from '../types/types';
 import image from '../assets/images/bird.06a46938.jpg';
-import {indicators} from "../constants/constants";
 
 
 export const initialState: initialStateType = {
@@ -30,7 +31,7 @@ export const initialState: initialStateType = {
     indicators,
     currentLevel: 0,
     score: 0,
-    currentLevelScore: 5,
+    currentLevelScore: MAX_CURRENT_SCORE,
     isButtonDisabled: true,
     isMatch: false,
     isFinished: false,
@@ -45,52 +46,67 @@ const slice = createSlice({
     name: "game",
     initialState,
     reducers: {
-        setNextLevel: (state, action: PayloadAction<{value: number}>) => {
-            state.currentLevel = action.payload.value;
+        setBaseLevel: (state) => {
+            state.currentLevel = 0;
         },
-        setIsButtonDisabled: (state, action: PayloadAction<{isDisabled: boolean}>) => {
-            state.isButtonDisabled = action.payload.isDisabled;
+        setNextLevel: (state) => {
+            state.currentLevel += 1;
         },
-        setScore: (state, action: PayloadAction<{score: number}>) => {
-           state.score = action.payload.score;
+        setIsButtonDisabled: (state, action: PayloadAction<boolean>) => {
+            state.isButtonDisabled = action.payload;
         },
-        setCurrentLevelScore: (state, action: PayloadAction<{currentLevelScore: number}>) => {
-            state.currentLevelScore = action.payload.currentLevelScore;
+        resetScore: (state) => {
+            state.score = 0;
         },
-        setIsFinished: (state, action: PayloadAction<{isFinished: boolean}>) => {
-            state.isFinished = action.payload.isFinished;
+        increaseScore: (state) => {
+            state.score += state.currentLevelScore;
         },
-        setIsMatch: (state, action: PayloadAction<{isMatch: boolean}>) => {
-            state.isMatch =  action.payload.isMatch;
+        setCurrentLevelScore: (state, action: PayloadAction<number>) => {
+            state.currentLevelScore = action.payload;
         },
-        setQuestionBirdID: (state, action: PayloadAction<{value: number | null}>) => {
-            state.questionBirdID = action.payload.value;
+        decreaseCurrentLevelScore: (state) => {
+            state.currentLevelScore -= 1;
         },
-        setDescriptionBirdID: (state, action: PayloadAction<{value: number | null}>) => {
-            state.descriptionBirdID = action.payload.value;
+        setIsFinished: (state, action: PayloadAction<boolean>) => {
+            state.isFinished = action.payload;
         },
-        setClickedOptionsIDs: (state, action: PayloadAction<{clickedOptions: number}>) => {
+        setIsMatch: (state, action: PayloadAction<boolean>) => {
+            state.isMatch =  action.payload;
+        },
+        setQuestionBirdID: (state) => {
+            state.questionBirdID = Math.floor(Math.random() * state.birdsData[state.currentLevel].birds.length + 1);
+        },
+        setDescriptionBirdID: (state, action: PayloadAction<number | null>) => {
+            state.descriptionBirdID = action.payload;
+        },
+        setClickedOptionsIDs: (state, action: PayloadAction<number>) => {
             const newArr = [...state.clickedOptionsIDs];
-            if(!state.clickedOptionsIDs.includes(action.payload.clickedOptions)) {
-                newArr.push(action.payload.clickedOptions);
+            if(!state.clickedOptionsIDs.includes(action.payload)) {
+                newArr.push(action.payload);
             }
             state.clickedOptionsIDs = newArr;
         },
         resetClickedOptionsIDs: (state) => {
             state.clickedOptionsIDs = [];
         },
-        setIndicatorStatus: (state, action: PayloadAction<{indicator: IndicatorType}>) => {
+        setIndicatorStatus: (state, action: PayloadAction<IndicatorType>) => {
             state.indicators = state.indicators.map((indicator: IndicatorType) => {
-                if(indicator.id === action.payload.indicator.id) {
-                    return {...indicator, status: action.payload.indicator.status}
+                if(indicator.id === action.payload.id) {
+                    return {...indicator, status: action.payload.status}
                 }
                 return indicator;
             })
         },
         resetIndicatorStatus: (state) => {
             state.indicators = state.indicators.map((indicator: IndicatorType) => {
-                return {...indicator, status: 'default'}
+                return {...indicator, status: indicatorStatus.default}
             })
+        },
+        resetCurrentTimeFailAudio: (state) => {
+            state.failAudio.currentTime = 0;
+        },
+        resetCurrentTimeSuccessAudio: (state) => {
+            state.successAudio.currentTime = 0;
         }
     },
     extraReducers: builder => {
@@ -104,8 +120,11 @@ const slice = createSlice({
 export const gameReducer = slice.reducer;
 //Actions
 export const {
+    setBaseLevel,
     setCurrentLevelScore,
-    setScore,
+    decreaseCurrentLevelScore,
+    resetScore,
+    increaseScore,
     setNextLevel,
     setIsButtonDisabled,
     setDescriptionBirdID,
@@ -115,19 +134,60 @@ export const {
     setClickedOptionsIDs,
     resetClickedOptionsIDs,
     setIndicatorStatus,
-    resetIndicatorStatus
+    resetIndicatorStatus,
+    resetCurrentTimeFailAudio,
+    resetCurrentTimeSuccessAudio
 } = slice.actions;
 
 //ThunkCreator
 export const fetchBirdsData = createAsyncThunk('birds/fetchBirdsData', async (param, thunkAPI) => {
-    thunkAPI.dispatch(setAppLoadingStatus({status: 'loading'}));
+    thunkAPI.dispatch(setAppLoadingStatus({status: LOADING}));
     try {
         const res = await BirdsApi.fetchBirds();
         return {birdsData: res.data};
     } catch (err: any) {
         return thunkAPI.rejectWithValue(null);
     } finally {
-        thunkAPI.dispatch(setAppLoadingStatus({status: 'success'}));
+        thunkAPI.dispatch(setAppLoadingStatus({status: SUCCESS}));
     }
 });
 
+//Selectors
+const getDefaultData = (state: AppRootStateType): defaultDataType => state.game.defaultBirdData;
+export const selectDefaultBirdData = createSelector(getDefaultData, (defaultBirdData: defaultDataType) => defaultBirdData);
+
+const getBirdsData = (state: AppRootStateType): BirdsSectionType[] => state.game.birdsData;
+export const selectBirdsData = createSelector(getBirdsData, (birdsData: BirdsSectionType[]) => birdsData);
+
+const getIndicators = (state: AppRootStateType): IndicatorType[] => state.game.indicators;
+export const selectIndicators = createSelector(getIndicators, (indicators: IndicatorType[]) => indicators);
+
+const getCurrentLevel = (state: AppRootStateType): number => state.game.currentLevel;
+export const selectCurrentLevel = createSelector(getCurrentLevel, (currentLevel: number) => currentLevel);
+
+const getScore = (state: AppRootStateType): number => state.game.score;
+export const selectScore = createSelector(getScore, (score: number) => score);
+
+const getIsButtonDisabled = (state: AppRootStateType): boolean => state.game.isButtonDisabled;
+export const selectIsButtonDisabled = createSelector(getIsButtonDisabled, (isButtonDisabled: boolean) => isButtonDisabled);
+
+const getIsMatch = (state: AppRootStateType): boolean => state.game.isMatch;
+export const selectIsMatch = createSelector(getIsMatch, (isMatch: boolean) => isMatch);
+
+const getIsFinished = (state: AppRootStateType): boolean => state.game.isFinished;
+export const selectIsFinished = createSelector(getIsFinished, (isFinished: boolean) => isFinished);
+
+const getClickedOptionsIDs = (state: AppRootStateType): number[] => state.game.clickedOptionsIDs;
+export const selectClickedOptionsIDs = createSelector(getClickedOptionsIDs, (clickedOptionsIDs: number[]) => clickedOptionsIDs);
+
+const getQuestionBirdID = (state: AppRootStateType): number | null => state.game.questionBirdID;
+export const selectQuestionBirdID = createSelector(getQuestionBirdID, (questionBirdID: number | null) => questionBirdID);
+
+const getDescriptionBirdID = (state: AppRootStateType): number | null => state.game.descriptionBirdID;
+export const selectDescriptionBirdID = createSelector(getDescriptionBirdID, (descriptionBirdID: number | null) => descriptionBirdID);
+
+const getFailAudio = (state: AppRootStateType): HTMLAudioElement => state.game.failAudio;
+export const selectFailAudio = createSelector(getFailAudio, (failAudio: HTMLAudioElement) => failAudio);
+
+const getSuccessAudio = (state: AppRootStateType): HTMLAudioElement => state.game.successAudio;
+export const selectSuccessAudio = createSelector(getSuccessAudio, (successAudio: HTMLAudioElement) => successAudio);
