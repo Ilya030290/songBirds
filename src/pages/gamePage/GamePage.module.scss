@@ -11,7 +11,7 @@
   }
 }
 
-.btn {
+.confirmationButton {
   margin: 25px 0 25px 0;
   display: inline-block;
   font-weight: 400;
@@ -41,12 +41,12 @@
   }
 }
 
-.disabledBtn {
+.disabledButton {
   background-color: $midnightSandGray;
   cursor: not-allowed;
 }
 
-.unDisabledBtn {
+.unDisabledButton {
   background-color: $aquaPool;
   cursor: pointer;
 
