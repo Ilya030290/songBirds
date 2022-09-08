@@ -1,54 +1,66 @@
-import React, {useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from "./redux/store";
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from './redux/store';
 import {
-    fetchBirdsData, resetClickedOptionsIDs, resetIndicatorStatus, setCurrentLevelScore,
+    selectBirdsData,
+    selectCurrentLevel,
+    selectIsFinished,
+    selectScore,
+    fetchBirdsData,
+    resetClickedOptionsIDs,
+    resetIndicatorStatus,
+    setCurrentLevelScore,
     setDescriptionBirdID,
-    setIsButtonDisabled, setIsFinished,
-    setIsMatch, setNextLevel,
-    setQuestionBirdID, setScore
-} from "./redux/gameReducer";
-import Header from "./components/header/Header";
-import GamePage from "./pages/gamePage/GamePage";
-import Loader from "./components/common/loader/Loader";
-import Congratulations from "./components/congratsComponent/Congratulations";
+    setIsButtonDisabled,
+    setIsFinished,
+    setIsMatch,
+    setQuestionBirdID,
+    setBaseLevel,
+    resetScore
+} from './redux/gameReducer';
+import { selectAppStatus } from './redux/appReducer';
+import Header from './components/header/Header';
+import GamePage from './pages/gamePage/GamePage';
+import Loader from './components/common/loader/Loader';
+import Congratulations from './components/congratsComponent/Congratulations';
+import {LOADING, MAX_CURRENT_SCORE} from './constants/constants';
 import styles from './App.module.scss';
 
 
 const App = () => {
 
     const dispatch = useAppDispatch();
-    const status = useAppSelector(state => state.app.status);
-    const {currentLevel, isFinished, score, birdsData} = useAppSelector(state => state.game);
-
+    const status = useSelector(selectAppStatus);
+    const currentLevel = useSelector(selectCurrentLevel);
+    const isFinished = useSelector(selectIsFinished);
+    const score = useSelector(selectScore);
+    const birdsData = useSelector(selectBirdsData);
 
     useEffect(() => {
         dispatch(fetchBirdsData());
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch(setQuestionBirdID(
-            {value: Math.floor(Math.random() * birdsData[currentLevel].birds.length + 1)}
-        ));
+        dispatch(setQuestionBirdID());
     }, [dispatch, currentLevel, birdsData]);
 
-
     const resetCurrentLevel = () => {
-        dispatch(setDescriptionBirdID({value: null}));
-        dispatch(setIsButtonDisabled({isDisabled: true}));
-        dispatch(setIsMatch({isMatch: false}));
-        dispatch(setCurrentLevelScore({currentLevelScore: 5}));
+        dispatch(setDescriptionBirdID(null));
+        dispatch(setIsButtonDisabled(true));
+        dispatch(setIsMatch(false));
+        dispatch(setCurrentLevelScore(MAX_CURRENT_SCORE));
         dispatch(resetClickedOptionsIDs());
         dispatch(resetIndicatorStatus());
     };
 
     const handleFinish = () => {
         resetCurrentLevel();
-        dispatch(setNextLevel({value: 0}));
-        dispatch(setScore({score: 0}));
-        dispatch(setIsFinished({isFinished: false}));
+        dispatch(setBaseLevel());
+        dispatch(resetScore());
+        dispatch(setIsFinished(false));
     }
 
-    if(status === 'loading') return <Loader/>
+    if (status === LOADING) return <Loader/>
 
     return (
         <div className={styles.appContainer}>
