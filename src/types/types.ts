@@ -1,3 +1,5 @@
+import { FAILED, LOADING, SUCCESS } from '../constants/constants';
+
 export type BirdsSectionType = {
     id: number
     title: string
@@ -18,13 +20,18 @@ export type IndicatorType = {
     status: string
 };
 
-export type defaultData = {
+export type AppStatusType =
+  typeof LOADING |
+  typeof SUCCESS |
+  typeof FAILED;
+
+export type defaultDataType = {
     image: string
     name: string
 };
 
 export type initialStateType = {
-    defaultBirdData: defaultData
+    defaultBirdData: defaultDataType
     birdsData: BirdsSectionType[]
     indicators: IndicatorType[]
     currentLevel: number
