@@ -3,12 +3,12 @@ import { BsPlayCircle, BsPauseCircle } from 'react-icons/bs';
 import styles from "./AudioPlayer.module.scss";
 
 
-type PropsType = {
+type AudioPlayerPropsType = {
     audio: string
     isMatch: boolean
 }
 
-const AudioPlayer: React.FC<PropsType> = ({audio, isMatch}) => {
+const AudioPlayer: React.FC<AudioPlayerPropsType> = ({audio, isMatch}) => {
 
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
@@ -37,11 +37,7 @@ const AudioPlayer: React.FC<PropsType> = ({audio, isMatch}) => {
 
     const changePlayerVolume = () => {
         //@ts-ignore
-        volumeBar?.current.style.setProperty(
-            '--volume',
-            //@ts-ignore
-            `${volumeBar.current.value * 100}%`
-        );
+        volumeBar?.current.style.setProperty('--volume', `${volumeBar.current.value * 100}%`);
         //@ts-ignore
         setVolume(volumeBar?.current.value);
     };
