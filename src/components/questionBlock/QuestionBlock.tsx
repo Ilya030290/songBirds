@@ -1,20 +1,25 @@
 import React from 'react';
-import {useAppSelector} from "../../redux/store";
+import { useSelector } from 'react-redux';
+import { selectBirdsData, selectCurrentLevel, selectIsMatch, selectQuestionBirdID } from '../../redux/gameReducer';
 import AudioPlayer from "../common/audioPlayer/AudioPlayer";
 import styles from './QuestionBlock.module.scss';
 
-type QuestionPropsType = {
+
+type QuestionBlockPropsType = {
     image: string
     name: string
 }
 
-const QuestionBlock: React.FC<QuestionPropsType> = ({image, name}) => {
+const QuestionBlock: React.FC<QuestionBlockPropsType> = ({image, name}) => {
 
-    const {currentLevel, birdsData, questionBirdID, isMatch} = useAppSelector(state => state.game);
+    const birdsData = useSelector(selectBirdsData);
+    const currentLevel = useSelector(selectCurrentLevel);
+    const questionBirdID = useSelector(selectQuestionBirdID);
+    const isMatch = useSelector(selectIsMatch);
 
     return (
         <div className={styles.questionContainer}>
-            <img className={styles.img} src={image}  alt={'bird'}/>
+            <img className={styles.image} src={image}  alt={'bird'}/>
             <div className={styles.listContainer}>
                 <div className={styles.list}>
                     <h3>{name}</h3>
