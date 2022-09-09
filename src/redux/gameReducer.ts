@@ -36,7 +36,7 @@ export const initialState: initialStateType = {
     isMatch: false,
     isFinished: false,
     clickedOptionsIDs: [],
-    questionBirdID: null,
+    questionBirdID: 0,
     descriptionBirdID: null,
     successAudio: new Audio('https://birds-quiz.netlify.app/static/media/win.a1e9e8b6.mp3'),
     failAudio: new Audio('https://birds-quiz.netlify.app/static/media/error.165166d5.mp3')
@@ -180,8 +180,8 @@ export const selectIsFinished = createSelector(getIsFinished, (isFinished: boole
 const getClickedOptionsIDs = (state: AppRootStateType): number[] => state.game.clickedOptionsIDs;
 export const selectClickedOptionsIDs = createSelector(getClickedOptionsIDs, (clickedOptionsIDs: number[]) => clickedOptionsIDs);
 
-const getQuestionBirdID = (state: AppRootStateType): number | null => state.game.questionBirdID;
-export const selectQuestionBirdID = createSelector(getQuestionBirdID, (questionBirdID: number | null) => questionBirdID);
+const getQuestionBirdID = (state: AppRootStateType): number => state.game.questionBirdID;
+export const selectQuestionBirdID = createSelector(getQuestionBirdID, (questionBirdID: number) => questionBirdID);
 
 const getDescriptionBirdID = (state: AppRootStateType): number | null => state.game.descriptionBirdID;
 export const selectDescriptionBirdID = createSelector(getDescriptionBirdID, (descriptionBirdID: number | null) => descriptionBirdID);
