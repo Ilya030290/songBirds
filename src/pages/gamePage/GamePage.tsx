@@ -14,6 +14,7 @@ import {
 import QuestionBlock from "../../components/questionBlock/QuestionBlock";
 import AnswersBlock from '../../components/answersBlock/AnswersBlock';
 import BirdDescriptionBlock from "../../components/birdDescriptionBlock/BirdDescriptionBlock";
+import { BirdType } from '../../types/types';
 import styles from "./GamePage.module.scss";
 
 
@@ -33,11 +34,12 @@ const GamePage: React.FC<GamePagePropsType> = ({resetCurrentLevel}) => {
     const isMatch = useSelector(selectIsMatch);
 
     const isNotLastLevel = currentLevel !== birdsData.length - 1;
-    const currentLevelQuestionBird: any = questionBirdID && birdsData[currentLevel].birds[questionBirdID - 1];
+
+    const currentLevelQuestionBird: BirdType = birdsData[currentLevel].birds[questionBirdID - 1];
 
     const currentBirdData = {
-        image: currentLevelQuestionBird?.image,
-        name: currentLevelQuestionBird?.name
+        image: currentLevelQuestionBird.image,
+        name: currentLevelQuestionBird.name
     }
     const bird = isMatch ? currentBirdData : defaultBirdData;
 
