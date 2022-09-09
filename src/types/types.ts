@@ -41,7 +41,7 @@ export type initialStateType = {
     isMatch: boolean
     isFinished: boolean
     clickedOptionsIDs: number[]
-    questionBirdID: number | null
+    questionBirdID: number
     descriptionBirdID: number | null
     failAudio: HTMLAudioElement
     successAudio: HTMLAudioElement
