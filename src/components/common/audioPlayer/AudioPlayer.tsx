@@ -14,76 +14,75 @@ const AudioPlayer: React.FC<AudioPlayerPropsType> = ({audio, isMatch}) => {
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [volume, setVolume] = useState(0.5);
-    const audioPlayer = useRef<HTMLAudioElement>();
-    const progressBar = useRef(null);
-    const volumeBar = useRef(null);
-    const animationRef = useRef(null);
+    const audioPlayer = useRef<HTMLAudioElement>(null);
+    const progressBar = useRef<HTMLInputElement>(null);
+    const volumeBar = useRef<HTMLInputElement>(null);
+    const animationRef = useRef<number | null>(null);
 
     const handleLoadingMetaData = () => {
-        if (audioPlayer?.current) {
+        if (audioPlayer.current) {
             const seconds = Math.floor(audioPlayer.current.duration);
             setDuration(seconds);
-            //@ts-ignore
-            progressBar.current.max = seconds;
+            if (progressBar.current) {
+                progressBar.current.max = seconds.toString();
+            }
         }
     };
 
     const changePlayerCurrentTime = () => {
-        //@ts-ignore
-        progressBar?.current.style.setProperty('--seek-before-width',`${(progressBar.current.value / duration) * 100}%`);
-        //@ts-ignore
-        setCurrentTime(progressBar?.current.value);
+        if (progressBar.current) {
+            progressBar.current.style.setProperty('--seek-before-width',`${(Number(progressBar.current.value) / duration) * 100}%`);
+            setCurrentTime(Number(progressBar.current.value));
+        }
     };
 
     const changePlayerVolume = () => {
-        //@ts-ignore
-        volumeBar?.current.style.setProperty('--volume', `${volumeBar.current.value * 100}%`);
-        //@ts-ignore
-        setVolume(volumeBar?.current.value);
+        if (volumeBar.current) {
+            volumeBar.current.style.setProperty('--volume', `${Number(volumeBar.current.value) * 100}%`);
+            setVolume(Number(volumeBar.current.value));
+        }
     };
 
     const whilePlaying = () => {
-        //@ts-ignore
-        progressBar.current.value = audioPlayer?.current?.currentTime;
-        changePlayerCurrentTime();
-        //@ts-ignore
-        animationRef.current = requestAnimationFrame(whilePlaying);
+        if (progressBar.current && audioPlayer.current) {
+            progressBar.current.value = audioPlayer.current.currentTime.toString();
+            changePlayerCurrentTime();
+            animationRef.current = requestAnimationFrame(whilePlaying);
+        }
     };
 
     const changeRange = () => {
-        //@ts-ignore
-        audioPlayer.current.currentTime = progressBar?.current?.value;
-        changePlayerCurrentTime();
+        if (audioPlayer.current && progressBar.current) {
+            audioPlayer.current.currentTime = Number(progressBar.current.value);
+            changePlayerCurrentTime();
+        }
     };
 
     const changeVolume = () => {
-        //@ts-ignore
-        audioPlayer.current.volume = volumeBar?.current.value;
-        changePlayerVolume();
+        if (audioPlayer.current && volumeBar.current) {
+            audioPlayer.current.volume = Number(volumeBar.current.value);
+            changePlayerVolume();
+        }
     };
 
     const togglePlayPause = () => {
         setIsPlaying(!isPlaying);
 
         if (!isPlaying) {
-            //@ts-ignore
-            audioPlayer.current.play();
-            //@ts-ignore
+            audioPlayer.current && audioPlayer.current.play();
             animationRef.current = requestAnimationFrame(whilePlaying);
         } else {
-            //@ts-ignore
-            audioPlayer.current.pause();
-            //@ts-ignore
-            cancelAnimationFrame(animationRef.current);
+            audioPlayer.current && audioPlayer.current.pause();
+            animationRef.current && cancelAnimationFrame(animationRef.current);
         }
     };
 
     const stopPlaying = () => {
         setIsPlaying(false);
-        //@ts-ignore
-        audioPlayer.current.pause();
-        //@ts-ignore
-        audioPlayer.current.currentTime = 0;
+        if (audioPlayer.current) {
+            audioPlayer.current.pause();
+            audioPlayer.current.currentTime = 0;
+        }
     };
 
     const formatTime = (time: number) => {
@@ -102,12 +101,14 @@ const AudioPlayer: React.FC<AudioPlayerPropsType> = ({audio, isMatch}) => {
     };
 
     useEffect(() => {
-        //@ts-ignore
-        audioPlayer.current.src = audio;
-        stopPlaying();
-        setCurrentTime(0);
-        //@ts-ignore
-        progressBar.current.style.setProperty('--seek-before-width',`${progressBar.current.value}`);
+        if (audioPlayer.current) {
+            audioPlayer.current.src = audio;
+            stopPlaying();
+            setCurrentTime(0);
+            if (progressBar.current) {
+                progressBar.current.style.setProperty('--seek-before-width',`${progressBar.current.value}`);
+            }
+        }
     }, [audio]);
 
     useEffect(() => {
@@ -125,7 +126,6 @@ const AudioPlayer: React.FC<AudioPlayerPropsType> = ({audio, isMatch}) => {
             <audio
                 onLoadedMetadata={handleLoadingMetaData}
                 onEnded={stopPlaying}
-                //@ts-ignore
                 ref={audioPlayer}
                 preload="metadata"
             >
